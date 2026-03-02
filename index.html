@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iffy.com | High-End Marketplace</title>
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Phosphor Icons for minimalist line icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/variables.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/slider.css">
+    <link rel="stylesheet" href="assets/css/shop.css">
+    <link rel="stylesheet" href="assets/css/reviews.css">
+    <link rel="stylesheet" href="assets/css/modals.css">
+    <link rel="stylesheet" href="assets/css/footer.css">
+</head>
+
+<body>
+    <!-- Flash Sale Timer -->
+    <div id="flash-sale-banner" class="flash-sale-banner glow-effect">
+        <div class="banner-content">
+            <span class="sale-text">Premium Sale Ends In:</span>
+            <div id="countdown-timer" class="countdown-timer">
+                <span id="hours">12</span>:<span id="minutes">45</span>:<span id="seconds">30</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transparent Sticky Header -->
+    <header class="main-header glass-header">
+        <div class="header-container">
+            <!-- Logo -->
+            <div class="logo">
+                <a href="#">Iffy<span>.</span></a>
+            </div>
+
+            <!-- Centered Search Bar -->
+            <div class="search-container">
+                <div class="search-bar">
+                    <i class="ph ph-magnifying-glass"></i>
+                    <input type="text" placeholder="Search premium products..." aria-label="Search">
+                    <button class="visual-search-btn" id="btn-visual-search" aria-label="Visual Search"
+                        title="Visual Search">
+                        <i class="ph ph-camera"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Actions -->
+            <nav class="header-actions">
+                <div class="icon-actions">
+                    <button class="icon-btn theme-toggle" id="btn-theme-toggle" aria-label="Toggle Dark Mode">
+                        <i class="ph ph-moon"></i>
+                    </button>
+                    <button class="icon-btn" aria-label="Wishlist">
+                        <i class="ph ph-heart"></i>
+                    </button>
+                    <a href="checkout.html" class="icon-btn cart-container" aria-label="Cart">
+                        <i class="ph ph-shopping-cart"></i>
+                        <span class="cart-badge">0</span>
+                    </a>
+                </div>
+
+                <div class="auth-actions desktop-only">
+                    <a href="#" class="auth-login"
+                        onclick="event.preventDefault(); document.getElementById('modal-login').classList.add('active'); document.body.style.overflow='hidden';">Login</a>
+                    <a href="#" class="auth-login"
+                        onclick="event.preventDefault(); document.getElementById('modal-signup').classList.add('active'); document.body.style.overflow='hidden';">Sign
+                        Up</a>
+                </div>
+
+                <div class="header-links desktop-only" style="margin-right: 1rem;">
+                    <div class="header-link lang-selector notranslate"
+                        style="position: relative; display: flex; align-items: center; cursor: pointer; font-weight: 600;">
+                        <span id="lang-text" style="text-transform: uppercase;">EN</span>
+                        <i class="ph ph-caret-down" style="margin-left: 2px;"></i>
+                        <select id="lang-select" onchange="translatePage(this.value)"
+                            style="position: absolute; opacity: 0; left: 0; top: 0; width: 100%; height: 100%; cursor: pointer;">
+                            <option value="en">English (EN)</option>
+                            <option value="ur">Urdu (UR)</option>
+                            <option value="ar">Arabic (AR)</option>
+                            <option value="es">Spanish (ES)</option>
+                            <option value="fr">French (FR)</option>
+                            <option value="hi">Hindi (HI)</option>
+                            <option value="zh-CN">Chinese (ZH)</option>
+                        </select>
+                        <div id="google_translate_element" style="display:none;"></div>
+                    </div>
+                </div>
+
+                <!-- Mobile Profile fallback -->
+                <button class="icon-btn profile-btn mobile-only" aria-label="Profile"
+                    onclick="document.getElementById('modal-login').classList.add('active'); document.body.style.overflow='hidden';">
+                    <i class="ph ph-user"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <nav class="mobile-bottom-nav">
+        <a href="#" class="nav-item active">
+            <i class="ph ph-house"></i>
+            <span>Home</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="ph ph-magnifying-glass"></i>
+            <span>Search</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="ph ph-shopping-bag"></i>
+            <span>Cart</span>
+        </a>
+        <a href="#" class="nav-item"
+            onclick="event.preventDefault(); document.getElementById('modal-login').classList.add('active'); document.body.style.overflow='hidden';">
+            <i class="ph ph-user"></i>
+            <span>Profile</span>
+        </a>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+
+        <!-- Floating Left Sidebar -->
+        <nav class="floating-sidebar">
+            <a href="just-for-you.html" class="float-item" title="Just for You">
+                <i class="ph ph-sparkle"></i>
+                <span class="float-text">Just for You</span>
+            </a>
+            <a href="categories.html" class="float-item" title="Categories">
+                <i class="ph ph-squares-four"></i>
+                <span class="float-text">Categories</span>
+            </a>
+            <a href="flash-sale.html" class="float-item" title="Flash Sale">
+                <i class="ph ph-lightning"></i>
+                <span class="float-text">Flash Sale</span>
+            </a>
+        </nav>
+
+        <!-- Hero Section Slider -->
+        <section class="hero-section">
+            <div class="slider-container" id="hero-slider">
+                <!-- Slide 1 -->
+                <div class="slide active">
+                    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                        alt="Premium Sneakers" class="slide-bg">
+                    <div class="slide-content glass-card">
+                        <span class="badge">New Arrival</span>
+                        <h2>Nike Air Max 270</h2>
+                        <p>Experience zero-gravity bounce with our latest limited edition series. Elevate your
+                            aesthetic.</p>
+                        <button class="btn btn-primary">Shop Now <i class="ph ph-arrow-right"></i></button>
+                    </div>
+                </div>
+                <!-- Slide 2 -->
+                <div class="slide">
+                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                        alt="Smartwatch" class="slide-bg">
+                    <div class="slide-content glass-card">
+                        <span class="badge">Trending Tech</span>
+                        <h2>Lumina Smart Watch Series X</h2>
+                        <p>Track your health, receive notifications, and look incredible doing it. Your all-in-one
+                            assistant.</p>
+                        <button class="btn btn-primary">Discover <i class="ph ph-arrow-right"></i></button>
+                    </div>
+                </div>
+                <!-- Slide 3 -->
+                <div class="slide">
+                    <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                        alt="Minimalist Home Decor" class="slide-bg">
+                    <div class="slide-content glass-card">
+                        <span class="badge">Home & Living</span>
+                        <h2>Minimalist Ceramic Collection</h2>
+                        <p>Transform your living space with our handcrafted artisanal ceramics. Pure, clean, minimalist.
+                        </p>
+                        <button class="btn btn-primary">Explore <i class="ph ph-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+            <!-- Slider Controls -->
+            <div class="slider-controls">
+                <button class="slider-btn prev-btn" id="slider-prev" aria-label="Previous slide"><i
+                        class="ph ph-caret-left"></i></button>
+                <div class="slider-dots" id="slider-dots">
+                    <span class="dot active" data-index="0"></span>
+                    <span class="dot" data-index="1"></span>
+                    <span class="dot" data-index="2"></span>
+                </div>
+                <button class="slider-btn next-btn" id="slider-next" aria-label="Next slide"><i
+                        class="ph ph-caret-right"></i></button>
+            </div>
+        </section>
+
+        <!-- Shop Layout container -->
+        <div class="shop-container">
+            <!-- Sidebar Filters -->
+            <aside class="shop-sidebar">
+                <div class="filter-group" id="category-filters">
+                    <h3>Categories</h3>
+                    <label class="filter-option">
+                        <input type="checkbox" data-filter="All" checked>
+                        <span>All Products</span>
+                    </label>
+                    <div class="category-wrapper">
+                        <label class="filter-option">
+                            <input type="checkbox" data-filter="Electronics" data-type="main">
+                            <span style="font-weight: 600;">Electronics</span>
+                        </label>
+                        <div class="subcategory-wrapper">
+                            <label class="filter-option">
+                                <input type="checkbox" data-filter="Mobile" data-type="sub" data-parent="Electronics">
+                                <span>Mobile</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox" data-filter="Laptops" data-type="sub" data-parent="Electronics">
+                                <span>Laptops</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="category-wrapper">
+                        <label class="filter-option">
+                            <input type="checkbox" data-filter="Fashion" data-type="main">
+                            <span style="font-weight: 600;">Fashion</span>
+                        </label>
+                        <div class="subcategory-wrapper">
+                            <label class="filter-option">
+                                <input type="checkbox" data-filter="Men's Clothing" data-type="sub"
+                                    data-parent="Fashion">
+                                <span>Men's Clothing</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox" data-filter="Women's Clothing" data-type="sub"
+                                    data-parent="Fashion">
+                                <span>Women's Clothing</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="category-wrapper">
+                        <label class="filter-option">
+                            <input type="checkbox" data-filter="Home Decor" data-type="main">
+                            <span style="font-weight: 600;">Home Decor</span>
+                        </label>
+                        <div class="subcategory-wrapper">
+                            <label class="filter-option">
+                                <input type="checkbox" data-filter="Lighting" data-type="sub" data-parent="Home Decor">
+                                <span>Lighting</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox" data-filter="Furniture" data-type="sub" data-parent="Home Decor">
+                                <span>Furniture</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="category-wrapper">
+                        <label class="filter-option">
+                            <input type="checkbox" data-filter="Beauty & Personal Care" data-type="main">
+                            <span style="font-weight: 600;">Beauty & Personal Care</span>
+                        </label>
+                        <div class="subcategory-wrapper">
+                            <label class="filter-option">
+                                <input type="checkbox" data-filter="Skincare" data-type="sub"
+                                    data-parent="Beauty & Personal Care">
+                                <span>Skincare</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox" data-filter="Fragrances" data-type="sub"
+                                    data-parent="Beauty & Personal Care">
+                                <span>Fragrances</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="category-wrapper">
+                        <label class="filter-option">
+                            <input type="checkbox" data-filter="Sports & Outdoors" data-type="main">
+                            <span style="font-weight: 600;">Sports & Outdoors</span>
+                        </label>
+                        <div class="subcategory-wrapper">
+                            <label class="filter-option">
+                                <input type="checkbox" data-filter="Fitness" data-type="sub"
+                                    data-parent="Sports & Outdoors">
+                                <span>Fitness</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox" data-filter="Outdoor Gear" data-type="sub"
+                                    data-parent="Sports & Outdoors">
+                                <span>Outdoor Gear</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <h3>Price Range</h3>
+                    <div class="price-slider-container">
+                        <input type="range" class="price-slider" min="0" max="1000" value="500">
+                        <div class="price-values">
+                            <span>Rs. 0</span>
+                            <span>Rs. 50,000+</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <h3>Features</h3>
+                    <label class="filter-option">
+                        <input type="checkbox">
+                        <span>Fast Delivery</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox">
+                        <span>Sale Items</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox">
+                        <span>High Ratings (4★+)</span>
+                    </label>
+                </div>
+            </aside>
+
+            <!-- Main Product Grid -->
+            <section class="products-area">
+                <div class="shop-header">
+                    <h2>Trending Now</h2>
+                    <select class="sort-select">
+                        <option value="featured">Featured</option>
+                        <option value="new">New Arrivals</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                    </select>
+                </div>
+
+                <div class="product-grid" id="product-grid">
+                    <!-- Dynamic Products will be injected here -->
+                </div>
+            </section>
+        </div>
+
+        <!-- Verified Reviews Section -->
+        <section class="reviews-section">
+            <div class="reviews-header">
+                <h2>Loved by Thousands</h2>
+                <p>Don't just take our word for it. See what our premium members are saying about their Iffy experience.
+                </p>
+            </div>
+
+            <div class="reviews-grid">
+                <!-- Review 1 -->
+                <div class="review-card">
+                    <div class="review-stars">
+                        <i class="ph-fill ph-star"></i>
+                        <i class="ph-fill ph-star"></i>
+                        <i class="ph-fill ph-star"></i>
+                        <i class="ph-fill ph-star"></i>
+                        <i class="ph-fill ph-star"></i>
+                    </div>
+                    <p class="review-text">"The visual search feature is absolute magic! I took a picture of a lamp I
+                        saw in a boutique, and found an almost identical one here. The quality blew me away."</p>
+                    <div class="reviewer-info">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80"
+                            alt="Sarah J." class="reviewer-img">
+                        <div class="reviewer-details">
+                            <h4>Sarah J.</h4>
+                            <span class="verified-badge"><i class="ph-fill ph-check-circle"></i> Verified Buyer</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="review-card">
+                    <div class="review-stars">
+                        <i class="ph-fill ph-star"></i>
+                        <i class="ph-fill ph-star"></i>
+                        <i class="ph-fill ph-star"></i>
+                        <i class="ph-fill ph-star"></i>
+                        <i class="ph-fill ph-star"></i>
+                    </div>
+                    <p class="review-text">"Iffy's checkout is exactly what it says: one click. No endless forms or
+                        frustration. Plus, the 360 view for the smartwatch gave me the confidence to buy."</p>
+                    <div class="reviewer-info">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80"
+                            alt="Michael T." class="reviewer-img">
+                        <div class="reviewer-details">
+                            <h4>Michael T.</h4>
+                            <span class="verified-badge"><i class="ph-fill ph-check-circle"></i> Verified Buyer</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="review-card">
+                    <div class="review-stars">
+                        <i class="ph-fill ph-star"></i>
+                        <i class="ph-fill ph-star"></i>
+                        <i class="ph-fill ph-star"></i>
+                        <i class="ph-fill ph-star"></i>
+                        <i class="ph-fill ph-star-half"></i>
+                    </div>
+                    <p class="review-text">"The AI size guide was surprisingly accurate. I was nervous about ordering
+                        the minimalist tee online, but it fit precisely according to the measurements they suggested."
+                    </p>
+                    <div class="reviewer-info">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80"
+                            alt="Elena R." class="reviewer-img">
+                        <div class="reviewer-details">
+                            <h4>Elena R.</h4>
+                            <span class="verified-badge"><i class="ph-fill ph-check-circle"></i> Verified Buyer</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="main-footer">
+            <div class="footer-container">
+                <div class="footer-brand">
+                    <a href="#">Iffy<span>.</span></a>
+                    <p>Premium e-commerce experience curated for you. Elevate your lifestyle with our handpicked
+                        selections.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="link-group">
+                        <h4>Shop</h4>
+                        <a href="shop.html">Tech</a>
+                        <a href="shop.html">Fashion</a>
+                        <a href="shop.html">Home</a>
+                        <a href="shop.html">Sale</a>
+                    </div>
+                    <div class="link-group">
+                        <h4>Support</h4>
+                        <a href="support.html">Help Center</a>
+                        <a href="support.html">Track Order</a>
+                        <a href="support.html">Returns</a>
+                        <a href="support.html">Contact Us</a>
+                    </div>
+                    <div class="link-group">
+                        <h4>Legal</h4>
+                        <a href="legal.html">Terms of Service</a>
+                        <a href="legal.html">Privacy Policy</a>
+                        <a href="legal.html">Cookie Policy</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="social-icons">
+                    <a href="https://facebook.com" target="_blank" aria-label="Facebook"><i
+                            class="ph-fill ph-facebook-logo"></i></a>
+                    <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i
+                            class="ph-fill ph-instagram-logo"></i></a>
+                    <a href="https://x.com" target="_blank" aria-label="X (Twitter)"><i class="ph ph-x-logo"></i></a>
+                    <a href="https://youtube.com" target="_blank" aria-label="YouTube"><i
+                            class="ph-fill ph-youtube-logo"></i></a>
+                    <a href="https://whatsapp.com" target="_blank" aria-label="WhatsApp"><i
+                            class="ph-fill ph-whatsapp-logo"></i></a>
+                </div>
+                <p>&copy; 2026 Iffy Marketplace. All Rights Reserved.</p>
+            </div>
+        </footer>
+
+        <!-- Modals & Overlays -->
+
+        <!-- Toast Container -->
+        <div id="toast-container" class="toast-container"></div>
+
+        <!-- Visual Search Modal -->
+        <div id="modal-visual-search" class="modal-overlay">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Visual Search</h3>
+                    <button class="close-modal-btn" aria-label="Close"><i class="ph ph-x"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="visual-search-dropzone">
+                        <i class="ph ph-upload-simple"></i>
+                        <h4>Upload an image to find similar products</h4>
+                        <p class="text-secondary">Drag and drop, or click to browse</p>
+                        <button class="btn btn-primary">Select Image</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 360 Degree View Modal -->
+        <div id="modal-360-view" class="modal-overlay">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>360° Interactive View</h3>
+                    <button class="close-modal-btn" aria-label="Close"><i class="ph ph-x"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="viewer-360-container" id="viewer-360">
+                        <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                            alt="360 view product" class="viewer-img">
+                        <div class="viewer-hint">
+                            <i class="ph ph-arrows-left-right"></i>
+                            Drag to rotate
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Size Guide Modal -->
+        <div id="modal-size-guide" class="modal-overlay">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>AI Size Predictor</h3>
+                    <button class="close-modal-btn" aria-label="Close"><i class="ph ph-x"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="size-guide-form">
+                        <label>Height (cm)</label>
+                        <input type="number" placeholder="e.g. 175">
+
+                        <label>Weight (kg)</label>
+                        <input type="number" placeholder="e.g. 70">
+
+                        <label>Fit Preference</label>
+                        <select class="sort-select" style="width: 100%; margin-bottom: 1.5rem; padding: 0.75rem;">
+                            <option>Regular Fit</option>
+                            <option>Slim Fit</option>
+                            <option>Loose / Oversized</option>
+                        </select>
+
+                        <button class="btn btn-primary" id="btn-predict-size" style="width: 100%;">Predict Size</button>
+                    </div>
+
+                    <div class="ai-recommendation" id="size-recommendation">
+                        <h4>Based on your profile, we recommend:</h4>
+                        <div class="recommended-size">Medium (M)</div>
+                        <p style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--text-secondary);">92% match
+                            based on our AI sizing model.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Login Modal -->
+        <div id="modal-login" class="modal-overlay">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Welcome Back</h3>
+                    <button class="close-modal-btn" aria-label="Close"
+                        onclick="this.closest('.modal-overlay').classList.remove('active'); document.body.style.overflow='';"><i
+                            class="ph ph-x"></i></button>
+                </div>
+                <div class="modal-body">
+                    <form onsubmit="event.preventDefault(); alert('Login submitted!');">
+                        <label>Email ID</label>
+                        <input type="email" placeholder="Enter your email" required
+                            style="width: 100%; margin-bottom: 1rem; padding: 0.75rem; background: var(--surface-light); border: 1px solid var(--border-color); color: var(--text-primary); border-radius: 8px;">
+
+                        <label>Password</label>
+                        <input type="password" placeholder="Enter your password" required
+                            style="width: 100%; margin-bottom: 1.5rem; padding: 0.75rem; background: var(--surface-light); border: 1px solid var(--border-color); color: var(--text-primary); border-radius: 8px;">
+
+                        <button class="btn btn-primary" type="submit" style="width: 100%;">Login</button>
+                    </form>
+                    <p style="text-align: center; margin-top: 1rem; font-size: 0.875rem; color: var(--text-secondary);">
+                        Don't have an account? <a href="#"
+                            onclick="event.preventDefault(); document.getElementById('modal-login').classList.remove('active'); document.getElementById('modal-signup').classList.add('active');"
+                            style="color: var(--primary-color);">Sign Up</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Signup Modal -->
+        <div id="modal-signup" class="modal-overlay">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Create Account</h3>
+                    <button class="close-modal-btn" aria-label="Close"
+                        onclick="this.closest('.modal-overlay').classList.remove('active'); document.body.style.overflow='';"><i
+                            class="ph ph-x"></i></button>
+                </div>
+                <div class="modal-body">
+                    <form onsubmit="event.preventDefault(); alert('Signup submitted!');">
+                        <label>Full Name</label>
+                        <input type="text" placeholder="Enter your name" required
+                            style="width: 100%; margin-bottom: 1rem; padding: 0.75rem; background: var(--surface-light); border: 1px solid var(--border-color); color: var(--text-primary); border-radius: 8px;">
+
+                        <label>Email ID</label>
+                        <input type="email" placeholder="Enter your email" required
+                            style="width: 100%; margin-bottom: 1rem; padding: 0.75rem; background: var(--surface-light); border: 1px solid var(--border-color); color: var(--text-primary); border-radius: 8px;">
+
+                        <label>Password</label>
+                        <input type="password" placeholder="Create a password" required
+                            style="width: 100%; margin-bottom: 1.5rem; padding: 0.75rem; background: var(--surface-light); border: 1px solid var(--border-color); color: var(--text-primary); border-radius: 8px;">
+
+                        <button class="btn btn-primary" type="submit" style="width: 100%;">Sign Up</button>
+                    </form>
+                    <p style="text-align: center; margin-top: 1rem; font-size: 0.875rem; color: var(--text-secondary);">
+                        Already have an account? <a href="#"
+                            onclick="event.preventDefault(); document.getElementById('modal-signup').classList.remove('active'); document.getElementById('modal-login').classList.add('active');"
+                            style="color: var(--primary-color);">Login</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- JavaScript -->
+        <script src="assets/js/theme.js"></script>
+        <script src="assets/js/timer.js"></script>
+        <script src="assets/js/slider.js"></script>
+        <script src="assets/js/ui.js"></script>
+        <script src="assets/js/data.js"></script>
+        <script src="assets/js/main.js"></script>
+
+        <!-- Google Translate Script -->
+        <script type="text/javascript">
+            function googleTranslateElementInit() {
+                new google.translate.TranslateElement({
+                    pageLanguage: 'en',
+                    includedLanguages: 'en,ur,ar,es,fr,hi,zh-CN',
+                    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                    autoDisplay: false
+                }, 'google_translate_element');
+            }
+
+            // Custom function to bridge select to Google Translate backend
+            function translatePage(langCode) {
+                document.getElementById('lang-text').innerText = langCode.substring(0, 2).toUpperCase();
+
+                // Force translation via Google Translate cookie and reload
+                document.cookie = `googtrans=/en/${langCode}; path=/`;
+                if (window.location.hostname) {
+                    document.cookie = `googtrans=/en/${langCode}; domain=${window.location.hostname}; path=/`;
+                }
+
+                // Fallback for file:// protocol where cookies might fail
+                window.location.hash = `#googtrans(en|${langCode})`;
+                window.location.reload();
+            }
+        </script>
+        <script type="text/javascript"
+            src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+</body>
+
+</html>

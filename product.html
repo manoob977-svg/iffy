@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details | Iffy Marketplace</title>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Google Model Viewer -->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+
+    <!-- Global Styles -->
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/variables.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+
+    <style>
+        /* Product Page Specific Layout */
+        .product-page {
+            max-width: 1200px;
+            margin: calc(var(--header-height) + 2rem) auto 4rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            min-height: 70vh;
+        }
+
+        @media (min-width: 900px) {
+            .product-page {
+                grid-template-columns: 1fr 1fr;
+                align-items: start;
+            }
+        }
+
+        /* Image Viewer Container */
+        .product-image-viewer {
+            position: relative;
+            background: var(--surface-light);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body.dark-mode .product-image-viewer {
+            background: #2a2e38;
+        }
+
+        .product-image-viewer img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform var(--transition-normal);
+        }
+
+        /* Sub-images (optional thumbnails) */
+        .thumbnail-strip {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            border-radius: var(--radius-md);
+            border: 2px solid var(--border-color);
+            cursor: pointer;
+            object-fit: cover;
+            transition: border-color var(--transition-fast);
+        }
+
+        .thumbnail:hover,
+        .thumbnail.active {
+            border-color: var(--brand-primary);
+        }
+
+        /* Product Details panel */
+        .product-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .product-breadcrumbs {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .product-breadcrumbs span {
+            margin: 0 0.5rem;
+        }
+
+        .product-title-large {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .product-rating-large {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #f1c40f;
+            font-size: 1.25rem;
+        }
+
+        .product-rating-large .count {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-left: 0.5rem;
+        }
+
+        .product-price-large {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
+        }
+
+        .original-price-large {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            text-decoration: line-through;
+            font-weight: 400;
+        }
+
+        .product-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        /* Fake Specs Table */
+        .product-specs {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .product-specs tr {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .product-specs td {
+            padding: 0.75rem 0;
+            color: var(--text-secondary);
+        }
+
+        .product-specs td:first-child {
+            font-weight: 600;
+            color: var(--text-primary);
+            width: 40%;
+        }
+
+        /* Action Buttons */
+        .action-row {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .btn-massive {
+            flex: 1;
+            padding: 1rem;
+            font-size: 1.1rem;
+            border-radius: var(--radius-md);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            border: none;
+        }
+
+        .btn-add-main {
+            background: var(--brand-primary);
+            color: white;
+            border: 2px solid var(--brand-primary);
+        }
+
+        .btn-add-main:hover {
+            background: transparent;
+            color: var(--brand-primary);
+        }
+
+        .btn-wishlist {
+            flex: 0 0 60px;
+            background: transparent;
+            border: 2px solid var(--border-color);
+            color: var(--text-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: var(--radius-md);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .btn-wishlist:hover {
+            border-color: #ff4757;
+            color: #ff4757;
+            background: rgba(255, 71, 87, 0.1);
+        }
+    </style>
+</head>
+
+<body class="light-mode">
+    <!-- Header -->
+    <header class="main-header glass-header"
+        style="border-bottom: 1px solid var(--border-color); position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;">
+        <div class="header-container"
+            style="height: var(--header-height); max-width: var(--max-width); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem;">
+            <div class="header-left">
+                <a href="index.html" class="logo">
+                    <h1>Iffy<span>.</span></h1>
+                </a>
+            </div>
+
+            <!-- Shared header actions block for UI consistency -->
+            <div class="header-right" style="display: flex; align-items: center; gap: 1.5rem;">
+                <button class="icon-btn theme-toggle" id="theme-toggle" aria-label="Toggle Theme">
+                    <i class="ph ph-moon"></i>
+                </button>
+
+                <a href="checkout.html" class="icon-btn" style="position: relative;" aria-label="View Cart">
+                    <i class="ph ph-shopping-bag"></i>
+                    <span class="cart-badge">0</span>
+                </a>
+
+                <a href="index.html" class="btn-primary"
+                    style="color: white; text-decoration: none; display: flex; align-items: center; gap: 0.25rem; font-weight: 600; padding: 0.5rem 1rem; border-radius: 8px;">
+                    <i class="ph ph-arrow-left"></i> Back
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container (Injected by product.js) -->
+    <main class="product-page" id="product-container">
+        <!-- Placeholder while loading -->
+        <div style="grid-column: 1/-1; text-align: center; padding: 4rem;">
+            <i class="ph ph-spinner ph-spin" style="font-size: 3rem; color: var(--brand-primary);"></i>
+            <p style="margin-top: 1rem; color: var(--text-secondary);">Loading product details...</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer"
+        style="text-align: center; padding: 2rem; border-top: 1px solid var(--border-color); color: var(--text-secondary);">
+        <p>&copy; 2026 Iffy Marketplace. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="assets/js/theme.js"></script>
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/product.js"></script>
+
+    <!-- Minimal Cart Hookup to ensure badge works globally on product page -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let cart = JSON.parse(localStorage.getItem('iffy_cart')) || [];
+            const cartBadge = document.querySelector('.cart-badge');
+            if (cartBadge) {
+                cartBadge.innerText = cart.length;
+            }
+        });
+    </script>
+</body>
+
+</html>
